@@ -28,21 +28,23 @@ kapt {
 }
 
 dependencies {
+    // kotlin conf
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${version_jackson}")
+    implementation(kotlin("stdlib"))
+
+    // kos
     implementation(platform("io.skullabs.kos:kos-bom:${version_kos}"))
 
-    implementation(kotlin("stdlib"))
     implementation("io.skullabs.kos:kos-core")
-    implementation("io.skullabs.kos:kos-annotations")
-    implementation("io.skullabs.kos:kos-logging-slf4j")
-    implementation("ch.qos.logback:logback-classic:${version_logback}")
     implementation("io.skullabs.kos:kos-injector")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${version_jackson}")
+    compileOnly("io.skullabs.kos:kos-annotations")
 
     // Annotation processors in Gradle requires kapt plugin
-    compileOnly("io.skullabs.kos:kos-annotations")
-    compileOnly("io.skullabs.injector:injector-processor")
     kapt("io.skullabs.kos:kos-annotations:${version_kos}")
-    kapt("io.skullabs.injector:injector-processor:${version_injector}")
+
+    // logging configuration
+    implementation("io.skullabs.kos:kos-logging-slf4j")
+    implementation("ch.qos.logback:logback-classic:${version_logback}")
 }
 
 tasks.withType<KotlinCompile> {
