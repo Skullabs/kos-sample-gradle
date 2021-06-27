@@ -1,16 +1,16 @@
 package kos.sample.simple
 
-import injector.ExposedAs
+import injector.Exposed
+import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.json.DecodeException
-import io.vertx.core.logging.Logger
-import io.vertx.ext.web.RoutingContext
-import kos.core.ExceptionHandler
-import kos.core.Response
+import kos.api.ExceptionHandler
+import kos.api.Response
+import org.slf4j.Logger
 
-@ExposedAs(ExceptionHandler::class)
-class MappedExceptions(val logger: Logger): ExceptionHandler {
+@Exposed
+class MappedExceptions(private val logger: Logger): ExceptionHandler {
 
-    override fun handle(context: RoutingContext, cause: Throwable): Response {
+    override fun handle(request: HttpServerRequest, cause: Throwable): Response {
         return when (cause) {
             is DecodeException -> Response.of(cause.message).statusCode(400)
             is NotFound -> Response.NOT_FOUND
