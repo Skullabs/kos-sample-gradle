@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Singleton
 @RestApi("/user")
-class UserCrudApi(val repository: InMemoryUserRepository) {
+class UserCrudApi(private val repository: InMemoryUserRepository) {
 
     @GET(":id")
     fun retrieveById(
