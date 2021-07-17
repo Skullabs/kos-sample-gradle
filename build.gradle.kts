@@ -7,7 +7,7 @@ plugins {
 }
 
 // Versions
-val version_kos = "0.6.0"
+val version_kos = "0.6.1"
 val version_logback = "1.2.3"
 val version_jackson = "2.9.+"
 
