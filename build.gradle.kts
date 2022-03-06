@@ -1,15 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.20"
-    kotlin("kapt") version "1.5.20"
-    id("io.vertx.vertx-plugin") version "1.2.0"
+    kotlin("jvm") version "1.6.10"
+    kotlin("kapt") version "1.6.10"
+    id("io.vertx.vertx-plugin") version "1.3.0"
 }
 
 // Versions
-val version_kos = "0.6.1"
+val version_kos = "0.8.0"
 val version_logback = "1.2.3"
-val version_jackson = "2.9.+"
+val version_jackson = "2.11.3"
 
 // Configuration
 val targetJvm = "11"
