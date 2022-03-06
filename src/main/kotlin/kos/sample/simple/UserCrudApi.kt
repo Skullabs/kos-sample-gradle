@@ -1,12 +1,18 @@
 package kos.sample.simple
 
 import injector.Singleton
+import io.vertx.core.Future
+import io.vertx.core.http.HttpHeaders
+import kos.api.Response
 import kos.rest.*
 import java.util.UUID
 
 @Singleton
 @RestApi("/user")
-class UserCrudApi(private val repository: InMemoryUserRepository) {
+class UserCrudApi constructor(
+    private val repository: InMemoryUserRepository,
+    private val userEventPublisher: UserEventPublisher,
+) {
 
     @GET(":id")
     fun retrieveById(
@@ -18,7 +24,10 @@ class UserCrudApi(private val repository: InMemoryUserRepository) {
     @POST
     fun insert(
         @Body user: User
-    ) = repository.insert(user)
+    ): Response {
+        val userId = repository.save(user)
+        return Response.CREATED.addHeader(HttpHeaders.LOCATION, "/user/$userId")
+    }
 
     @PUT(":id")
     fun update(
@@ -29,5 +38,8 @@ class UserCrudApi(private val repository: InMemoryUserRepository) {
     @DELETE(":id")
     fun delete(
         @Param id: UUID
-    ) = repository.delete(id)
+    ): Future<Response> =
+        repository.delete(id)
+            .compose { userEventPublisher.trigger(UserHasBeenDeleted(id)) }
+            .map { Response.NO_CONTENT }
 }
