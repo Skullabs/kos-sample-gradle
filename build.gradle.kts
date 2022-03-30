@@ -7,7 +7,7 @@ plugins {
 }
 
 // Versions
-val version_kos = "0.8.0"
+val version_kos = "0.8.1"
 val version_logback = "1.2.3"
 val version_jackson = "2.11.3"
 
@@ -17,7 +17,6 @@ val launcherClass = "kos.core.Launcher"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 kapt {
